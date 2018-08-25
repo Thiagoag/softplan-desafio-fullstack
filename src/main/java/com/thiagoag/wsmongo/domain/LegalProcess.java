@@ -6,6 +6,8 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.thiagoag.wsmongo.DTO.AuthorDTO;
+
 @Document
 public class LegalProcess implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,13 +18,13 @@ public class LegalProcess implements Serializable {
 	private String processNumber;
 	private String body;
 	private int status;
-	private User author;
+	private AuthorDTO author;
 	
 	public LegalProcess() {
 
 	}
 	
-	public LegalProcess(String id, Date date, String processNumber, String body, int status, User author) {
+	public LegalProcess(String id, Date date, String processNumber, String body, int status, AuthorDTO author) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -97,11 +99,11 @@ public class LegalProcess implements Serializable {
 		this.status = status;
 	}
 
-	public User getAuthor() {
+	public AuthorDTO getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(AuthorDTO author) {
 		this.author = author;
 	}	
 }

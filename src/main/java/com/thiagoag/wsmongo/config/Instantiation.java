@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.thiagoag.wsmongo.DTO.AuthorDTO;
 import com.thiagoag.wsmongo.domain.LegalProcess;
 import com.thiagoag.wsmongo.domain.User;
 import com.thiagoag.wsmongo.repository.LegalProcessRepository;
@@ -33,12 +34,11 @@ public class Instantiation implements CommandLineRunner{
 		User maria = new User(null, "Maria Silva", "maria@gmail.com");
 		User alex = new User(null, "Alex Oliveira", "alex@gmail.com");
 		User thiago = new User(null, "Thiago Garcia", "thiago@gmail.com");
-	
-		LegalProcess process1 = new LegalProcess(null, sdf.parse("25/08/2018"), "17430-0/2018", "Reclamação Trabalhista (...)", 0, alex);
-		LegalProcess process2 = new LegalProcess(null, sdf.parse("24/07/2017"), "1234-0/2017", "Mandado de segurança na seara trabalhista (...)", 1, alex);
-		LegalProcess process3 = new LegalProcess(null, sdf.parse("02/01/2015"), "5678-0/2015", "Mandado de segurança na seara trabalhista (...)", 0, alex);
-		
 		userRepository.saveAll(Arrays.asList(maria, alex, thiago));
+		
+		LegalProcess process1 = new LegalProcess(null, sdf.parse("25/08/2018"), "17430-0/2018", "Reclamação Trabalhista (...)", 0, new AuthorDTO(alex));
+		LegalProcess process2 = new LegalProcess(null, sdf.parse("24/07/2017"), "1234-0/2017", "Mandado de segurança na seara trabalhista (...)", 1, new AuthorDTO(alex));
+		LegalProcess process3 = new LegalProcess(null, sdf.parse("02/01/2015"), "5678-0/2015", "Mandado de segurança na seara trabalhista (...)", 0, new AuthorDTO(alex));
 		lpRepository.saveAll(Arrays.asList(process1, process2, process3));
 	}
 
