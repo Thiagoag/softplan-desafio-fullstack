@@ -1,5 +1,6 @@
 package com.thiagoag.wsmongo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class LegalProcessService {
 	public LegalProcess findById(String id) {
 		Optional<LegalProcess> process = lpRepo.findById(id);
 		return process.orElseThrow(() -> new ObjectNotFoundException("Process not found"));
+	}
+	
+	public List<LegalProcess> findByProcessNumber(String text){
+		return lpRepo.findByProcessNumberContainingIgnoreCase(text);
 	}
 	
 }
