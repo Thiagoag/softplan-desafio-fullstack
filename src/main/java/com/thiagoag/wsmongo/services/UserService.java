@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.thiagoag.wsmongo.DTO.UserDTO;
 import com.thiagoag.wsmongo.domain.User;
 import com.thiagoag.wsmongo.repository.UserRepository;
 import com.thiagoag.wsmongo.services.exception.ObjectNotFoundException;
@@ -23,5 +24,13 @@ public class UserService {
 	public User findById(String id) {
 		Optional<User> user = repo.findById(id);
 		return user.orElseThrow(() -> new ObjectNotFoundException("User not found"));
+	}
+	
+	public User insert(User obj) {
+		return repo.insert(obj);
+	}
+	
+	public User fromDTO(UserDTO objDTO) {
+		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
 	}
 }
