@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.thiagoag.wsmongo.DTO.AuthorDTO;
+import com.thiagoag.wsmongo.DTO.DecisionDTO;
 
 @Document
 public class LegalProcess implements Serializable {
@@ -19,10 +20,8 @@ public class LegalProcess implements Serializable {
 	private String body;
 	private int status;
 	private AuthorDTO author;
+	private DecisionDTO decision;
 	
-	public LegalProcess() {
-
-	}
 	
 	public LegalProcess(String id, Date date, String processNumber, String body, int status, AuthorDTO author) {
 		super();
@@ -106,4 +105,16 @@ public class LegalProcess implements Serializable {
 	public void setAuthor(AuthorDTO author) {
 		this.author = author;
 	}	
+	
+	public DecisionDTO getDecision() {
+		return decision;
+	}
+
+	public void setDecision(DecisionDTO decision) {
+		this.decision = decision;
+	}
+
+	public LegalProcess() {
+
+	}
 }
