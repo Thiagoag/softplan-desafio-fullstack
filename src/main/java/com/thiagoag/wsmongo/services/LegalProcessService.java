@@ -22,7 +22,7 @@ public class LegalProcessService {
 	}
 	
 	public List<LegalProcess> findByProcessNumber(String text){
-		return lpRepo.findByProcessNumberContainingIgnoreCase(text);
+		return lpRepo.findByProcNumQuery(text);
 	}
 	
 }
