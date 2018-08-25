@@ -40,6 +40,9 @@ public class Instantiation implements CommandLineRunner{
 		LegalProcess process2 = new LegalProcess(null, sdf.parse("24/07/2017"), "1234-0/2017", "Mandado de segurança na seara trabalhista (...)", 1, new AuthorDTO(alex));
 		LegalProcess process3 = new LegalProcess(null, sdf.parse("02/01/2015"), "5678-0/2015", "Mandado de segurança na seara trabalhista (...)", 0, new AuthorDTO(alex));
 		lpRepository.saveAll(Arrays.asList(process1, process2, process3));
+	
+		alex.getProcesses().addAll(Arrays.asList(process1, process2, process3));
+		userRepository.save(alex);
 	}
 
 }
