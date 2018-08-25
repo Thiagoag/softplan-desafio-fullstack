@@ -1,12 +1,16 @@
 package com.thiagoag.wsmongo.config;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.thiagoag.wsmongo.domain.LegalProcess;
 import com.thiagoag.wsmongo.domain.User;
+import com.thiagoag.wsmongo.repository.LegalProcessRepository;
 import com.thiagoag.wsmongo.repository.UserRepository;
 
 @Configuration
@@ -15,15 +19,27 @@ public class Instantiation implements CommandLineRunner{
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private LegalProcessRepository lpRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
-		userRepository.deleteAll();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
-		User maria = new User(null, "Maria Brown", "maria@gmail.com");
-		User alex = new User(null, "Alex Green", "alex@gmail.com");
-		User bob = new User(null, "Bob Grey", "bob@gmail.com");
+		userRepository.deleteAll();
+		lpRepository.deleteAll();
+		
+		User maria = new User(null, "Maria Silva", "maria@gmail.com");
+		User alex = new User(null, "Alex Oliveira", "alex@gmail.com");
+		User thiago = new User(null, "Thiago Garcia", "thiago@gmail.com");
 	
-		userRepository.saveAll(Arrays.asList(maria, alex, bob));
+		LegalProcess process1 = new LegalProcess(null, sdf.parse("25/08/2018"), "17430-0/2018", "Reclamação Trabalhista (...)", 0, alex);
+		LegalProcess process2 = new LegalProcess(null, sdf.parse("24/07/2017"), "1234-0/2017", "Mandado de segurança na seara trabalhista (...)", 1, alex);
+		LegalProcess process3 = new LegalProcess(null, sdf.parse("02/01/2015"), "5678-0/2015", "Mandado de segurança na seara trabalhista (...)", 0, alex);
+		
+		userRepository.saveAll(Arrays.asList(maria, alex, thiago));
+		lpRepository.saveAll(Arrays.asList(process1, process2, process3));
 	}
 
 }
