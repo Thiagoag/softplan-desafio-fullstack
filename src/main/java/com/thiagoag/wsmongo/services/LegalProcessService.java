@@ -40,4 +40,18 @@ public class LegalProcessService {
 		return new LegalProcess(objDTO.getId(), objDTO.getDate(), objDTO.getProcessNumber(), objDTO.getBody(), objDTO.getStatus(), objDTO.getAuthor(), objDTO.getDecision());
 	}
 	
+	public LegalProcess update(LegalProcess obj) {
+		LegalProcess newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return lpRepo.save(newObj);
+	}
+	
+	private void updateData(LegalProcess newObj, LegalProcess obj) {
+		newObj.setDate(obj.getDate());
+		newObj.setProcessNumber(obj.getProcessNumber());
+		newObj.setBody(obj.getBody());
+		newObj.setStatus(obj.getStatus());
+		newObj.setAuthor(obj.getAuthor());
+		newObj.setDecision(obj.getDecision());
+	}
 }
