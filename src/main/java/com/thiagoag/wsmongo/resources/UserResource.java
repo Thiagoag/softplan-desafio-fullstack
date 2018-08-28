@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,9 @@ public class UserResource {
 	@Autowired
 	private UserService service;
 	
+	
 	//@GetMapping also works
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> findAll(){
 		List<User> list = service.findAll();
@@ -33,6 +36,7 @@ public class UserResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<UserDTO> findById(@PathVariable String id){
 		User obj = service.findById(id);
@@ -40,21 +44,25 @@ public class UserResource {
 	}
 	 
 	//@PostMapping also works
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping( method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody UserDTO objDTO){
+	public ResponseEntity<UserDTO> insert(@RequestBody UserDTO objDTO){
 		User obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		//To return a header with the created resource URL is good practice
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();		
+	//	return ResponseEntity.created(uri).build();		
+		return ResponseEntity.created(uri).body(new UserDTO(obj));	
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable String id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();		
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody UserDTO objDTO, @PathVariable String id){
 		User obj = service.fromDTO(objDTO);
@@ -63,6 +71,7 @@ public class UserResource {
 		return ResponseEntity.noContent().build();	
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/{id}/processes", method=RequestMethod.GET)
 	public ResponseEntity<List<LegalProcess>> findProcesses(@PathVariable String id){
 		User obj = service.findById(id);

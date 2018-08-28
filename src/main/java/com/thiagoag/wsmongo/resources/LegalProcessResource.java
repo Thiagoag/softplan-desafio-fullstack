@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +27,14 @@ public class LegalProcessResource {
 	@Autowired
 	private LegalProcessService service;
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<LegalProcess> findById(@PathVariable String id){
 		LegalProcess obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);		
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/procnumsearch", method=RequestMethod.GET)
 	public ResponseEntity<List<LegalProcess>> findByProcNumber(@RequestParam(value="text", defaultValue="") String text){
 		text = URL.decodeParam(text);
@@ -39,6 +42,7 @@ public class LegalProcessResource {
 		return ResponseEntity.ok().body(list);		
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/fullsearch", method=RequestMethod.GET)
 	public ResponseEntity<List<LegalProcess>> fullSearch(
 			@RequestParam(value="text", defaultValue="") String text,
@@ -51,6 +55,7 @@ public class LegalProcessResource {
 		return ResponseEntity.ok().body(list);		
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping( method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody LegalProcessDTO objDTO){
 		LegalProcess obj = service.fromDTO(objDTO);
@@ -60,6 +65,7 @@ public class LegalProcessResource {
 		return ResponseEntity.created(uri).build();		
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody LegalProcessDTO objDTO, @PathVariable String id){
 		LegalProcess obj = service.fromDTO(objDTO);
